@@ -4,280 +4,126 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Tripti Pandey — Portfolio</title>
-
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Particles.js for real interstellar animation -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
 <style>
   :root{
-    --bg1: #05040a;         /* deep space */
-    --bg2: #090712;         /* darker */
-    --nebula: rgba(124,58,237,0.08); /* purple nebula */
-    --accent: #6ee7ff;      /* cyan neon */
-    --accent2: #b388ff;     /* violet */
-    --card: #0b0b10;
+    --bg1: #05040a;
+    --bg2: #090712;
+    --accent: #6ee7ff;
+    --accent2: #b388ff;
     --muted: #9aa3b2;
     --border: #000;
   }
-
-  /* Reset */
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
+  html,body{height:100%;overflow-x:hidden}
   body{
-    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(92, 72, 170, 0.12), transparent 6%),
-                radial-gradient(900px 450px at 90% 80%, rgba(14, 165, 233, 0.06), transparent 8%),
-                linear-gradient(180deg,var(--bg1),var(--bg2));
+    font-family:"Inter",sans-serif;
+    background:#000;
     color:#e6eef6;
-    -webkit-font-smoothing:antialiased;
-    scroll-behavior: smooth;
-    overflow-x:hidden;
     position:relative;
-    padding-top:72px; /* space for header */
+    padding-top:66px;
   }
-
-  /* stars */
-  body::before, body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background-image:
-      radial-gradient(1px 1px at 10% 20%, #ffffff22 50%, transparent 51%),
-      radial-gradient(1px 1px at 20% 40%, #ffffff22 50%, transparent 51%),
-      radial-gradient(1px 1px at 40% 60%, #ffffff22 50%, transparent 51%),
-      radial-gradient(1px 1px at 70% 80%, #ffffff22 50%, transparent 51%),
-      radial-gradient(1px 1px at 80% 20%, #ffffff22 50%, transparent 51%);
-    opacity:0.55;
-    mix-blend-mode:screen;
-    animation: twinkle 8s linear infinite;
+  #particles-js{
+    position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;
   }
-  body::after{
-    background-image:
-      radial-gradient(2px 2px at 50% 10%, #ffffff22 50%, transparent 51%),
-      radial-gradient(2px 2px at 80% 30%, #ffffff22 50%, transparent 51%),
-      radial-gradient(2px 2px at 30% 80%, #ffffff22 50%, transparent 51%);
-    opacity:0.35;
-    animation-duration:12s;
-  }
-  @keyframes twinkle { 0%{transform:translateY(0)}50%{transform:translateY(1px)}100%{transform:translateY(0)} }
-
-  /* Header / Nav */
   header{
-    position:fixed;
-    top:0;left:0;right:0;
-    height:64px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    position:fixed;top:0;left:0;right:0;height:64px;
+    display:flex;align-items:center;justify-content:space-between;
     padding:0 28px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-    border-bottom:2px solid rgba(0,0,0,0.6);
+    background:rgba(5,4,10,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(110,231,255,0.1);
     z-index:1000;
-    backdrop-filter: blur(6px) saturate(120%);
   }
-  .logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    color:var(--accent);
-    font-family: "Orbitron", sans-serif;
-    letter-spacing:0.6px;
-    font-weight:700;
-  }
+  .logo{color:var(--accent);font-family:"Orbitron",sans-serif;font-size:24px;font-weight:700;cursor:pointer}
   nav a{
-    color: #cfe9ff;
-    text-decoration:none;
-    margin-left:12px;
-    padding:8px 12px;
-    border-radius:8px;
-    font-weight:600;
-    font-size:14px;
-    border:1px solid rgba(255,255,255,0.03);
+    color:#cfe9ff;text-decoration:none;margin-left:12px;padding:8px 14px;
+    border-radius:8px;font-weight:600;font-size:14px;transition:all .3s;
   }
   nav a:hover{
-    background: linear-gradient(90deg,var(--accent),var(--accent2));
-    color:#05040a;
-    transform:translateY(-2px);
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    color:#000;transform:translateY(-2px);
   }
-
-  /* Layout */
-  .container{max-width:1100px;margin:0 auto;padding:48px 22px}
-  section{padding:72px 0; position:relative}
-
-  /* HERO */
+  .container{max-width:1100px;margin:0 auto;padding:10px 22px}
+  section{padding:20px 0;position:relative}
   .hero{
-    display:grid;
-    grid-template-columns: 360px 1fr;
-    gap:40px;
-    align-items:center;
-    min-height:78vh;
+    display:grid;grid-template-columns:360px 1fr;gap:50px;align-items:center;
+    min-height:calc(100vh - 66px);
   }
-
   .photo-wrap{
-    width:360px;
-    height:360px;
-    border-radius:18px;
-    padding:10px;
-    background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    border:2px solid var(--border);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 40px rgba(107,99,255,0.06);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    overflow:hidden;
+    width:360px;height:360px;border-radius:20px;overflow:hidden;
+    border:3px solid rgba(110,231,255,0.2);
+    box-shadow:0 0 60px rgba(110,231,255,0.15);
   }
-  .photo-wrap img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:12px;
-    display:block;
-    border:4px solid rgba(0,0,0,0.5);
-    box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  .photo-wrap img{width:100%;height:100%;object-fit:cover}
+  .name{font-family:"Orbitron",sans-serif;font-size:42px;color:var(--accent);margin-bottom:8px}
+  .title{font-size:19px;color:#cfe9ff;margin-bottom:20px}
+  .typed{font-size:19px;color:#bfefff;margin:20px 0;min-height:30px}
+  .hero p{line-height:1.7;max-width:62ch;color:var(--muted);margin-bottom:25px}
+  .hero-actions a{
+    padding:12px 24px;border-radius:12px;text-decoration:none;
+    font-weight:600;margin-right:12px;display:inline-block;
   }
-  .glow-ring{
-    position:absolute;
-    inset: -40% -30% auto -30%;
-    height:120%;
-    pointer-events:none;
-    background: radial-gradient(closest-side, rgba(110,231,255,0.10), transparent 40%);
-    filter:blur(30px);
-    transform: rotate(15deg);
-  }
+  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000}
+  .btn{background:rgba(255,255,255,0.05);color:#eaf8ff;border:1px solid rgba(255,255,255,0.1)}
 
-  .hero .intro{
-    padding-right:10px;
-  }
-  .name{
-    font-family:"Orbitron",sans-serif;
-    font-size:36px;
-    color:var(--accent);
-    line-height:1;
-  }
-  .title{
-    font-weight:600;
-    font-size:18px;
-    color:#cfe9ff;
-    margin-top:6px;
-    margin-bottom:16px;
-  }
-  .typed{
-    font-family: "Inter", sans-serif;
-    font-size:18px;
-    color: #bfefff;
-    margin-bottom:18px;
-    min-height:28px;
-  }
+  .about-grid{display:flex;gap:28px;flex-wrap:wrap}
+  .about-card{flex:1;min-width:280px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:24px;border-radius:12px}
+  .about-card h3{color:var(--accent);font-family:"Orbitron",sans-serif;margin-bottom:12px}
 
-  .intro p{
-    color:var(--muted);
-    max-width:56ch;
-    line-height:1.6;
-    margin-bottom:18px;
-  }
+  .skills{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+  .skill{padding:10px 16px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);color:#dcefff;font-weight:600}
 
-  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-  .btn{
-    padding:10px 16px;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.06);
-    background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    color:#eaf8ff;
-    text-decoration:none;
-    font-weight:600;
-  }
-  .btn.primary{
-    background: linear-gradient(90deg,var(--accent),var(--accent2));
-    color:#05040a;
-    box-shadow: 0 6px 18px rgba(110,231,255,0.12);
-  }
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:20px}
+  .proj-card{background:rgba(255,255,255,0.02);border:2px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s}
+  .proj-card:hover{transform:translateY(-12px);box-shadow:0 30px 60px rgba(0,0,0,0.6)}
+  .proj-thumb{width:100%;height:160px;object-fit:cover}
+  .proj-body{padding:16px}
+  .proj-title{font-family:"Orbitron",sans-serif;color:#eaf8ff;font-weight:700}
+  .proj-desc{color:var(--muted);font-size:14px;margin:8px 0}
+  .link-icon{color:#cfe9ff;font-weight:600}
 
-  /* About */
-  .about-grid{display:flex;gap:28px;align-items:flex-start}
-  .about-card{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.03);
-    padding:20px;
-    border-radius:12px;
-  }
-  .about-card h3{color:var(--accent); font-family:"Orbitron",sans-serif;margin-bottom:8px}
-  .about-card p{color:var(--muted);line-height:1.6}
+  .resume-btn{padding:14px 28px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;font-weight:700;text-decoration:none}
 
-  /* Skills */
-  .skills{
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
-    margin-top:14px;
-  }
-  .skill{
-    padding:10px 12px;
-    border-radius:10px;
-    background:linear-gradient(180deg,#08101a10,#0b0f1410);
-    border:1px solid rgba(255,255,255,0.03);
-    color:#dcefff;
-    font-weight:600;
-    display:flex;
-    gap:8px;
-    align-items:center;
-  }
+  .subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:20px}
+  .subject-btn{padding:16px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:#eaf8ff;text-align:center;font-weight:600;text-decoration:none;transition:all .3s}
+  .subject-btn:hover{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000}
 
-  /* Projects */
-  .projects-grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
-    gap:18px;
-    margin-top:18px;
-  }
-  .proj-card{
-    display:flex;flex-direction:column;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:2px solid var(--border);
-    border-radius:12px;
-    overflow:hidden;
-    text-decoration:none;
-    color:inherit;
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-  .proj-card:hover{ transform: translateY(-10px); box-shadow:0 30px 60px rgba(0,0,0,0.6); }
-  .proj-thumb{ width:100%; height:150px; object-fit:cover; display:block; border-bottom:2px solid rgba(0,0,0,0.6); }
-  .proj-body{ padding:14px; display:flex; flex-direction:column; gap:8px; }
-  .proj-title{ font-weight:700; color:#eaf8ff; font-family:"Orbitron",sans-serif; }
-  .proj-desc{ color:var(--muted); font-size:14px; line-height:1.5; }
-  .proj-links{ margin-top:auto; display:flex; gap:8px; align-items:center; }
+  #learning-content{margin-top:30px;background:rgba(0,0,0,0.4);padding:24px;border-radius:12px;display:none;border:1px solid rgba(255,255,255,0.05)}
+  #txt-display{white-space:pre-wrap;font-family:monospace;color:#dcefff;line-height:1.6;max-height:60vh;overflow:auto}
 
-  .link-icon{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
-    background: rgba(255,255,255,0.02); color:#cfe9ff; text-decoration:none; font-weight:700;
-  }
+  footer{text-align:center;padding:40px 0;color:#99a9bb;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px}
 
-  /* Resume & contact */
-  .resume-btn{ display:inline-block;padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#05040a; font-weight:700; text-decoration:none; border:0; }
+  .hidden{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.2,.9,.2,1)}
+  .show{opacity:1;transform:translateY(0)}
 
-  .contact p{ color:var(--muted) }
-
-  /* Footer */
-  footer{ text-align:center;padding:28px 0;color: #99a9bb; opacity:0.9; border-top:1px solid rgba(255,255,255,0.02); margin-top:40px }
-
-  /* Hidden / reveal */
-  .hidden { opacity:0; transform: translateY(30px); transition: all .7s cubic-bezier(.2,.9,.2,1); }
-  .show { opacity:1; transform: translateY(0); }
-
-  /* Responsive */
   @media (max-width:960px){
-    .hero{ grid-template-columns: 1fr; text-align:center }
-    .photo-wrap{ width:260px;height:260px;margin:0 auto }
-    .intro{ order:2 }
+    .hero{grid-template-columns:1fr;text-align:center;gap:30px}
+    .photo-wrap{width:280px;height:280px;margin:0 auto}
+    body{padding-top:58px}
+    header{height:56px;padding:0 16px}
+  }
+  @media (max-width:600px){
+    nav{flex-direction:column;align-items:flex-end}
+    nav a{margin:4px 0}
+    .photo-wrap{width:220px;height:220px}
+    .name{font-size:32px}
+    .hero-actions{flex-direction:column;align-items:center}
+    .hero-actions a{margin:8px 0;width:80%}
   }
 </style>
 </head>
 <body>
 
+<!-- Interstellar animated background -->
+<div id="particles-js"></div>
+
 <header>
-  <div class="logo">Tripti<span style="color:var(--accent2)">.</span></div>
+  <div class="logo" id="logo">Tripti<span style="color:var(--accent2)"></span></div>
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
@@ -285,207 +131,220 @@
     <a href="#projects">Projects</a>
     <a href="#resume">Resume</a>
     <a href="#contact">Contact</a>
+    <a href="#mylearning">My Learning</a>
   </nav>
 </header>
 
 <main class="container">
 
-  <!-- HERO -->
   <section id="home" class="hidden">
     <div class="hero">
       <div class="photo-wrap">
-        <div class="glow-ring"></div>
-        <!-- Primary src local name, fallback to container path if needed -->
-        <img id="profilePhoto" src="your-photo.jpg" alt="Tripti Pandey"
-             onerror="this.onerror=null; this.src='/mnt/data/your-photo.jpg';">
+        <img src="your-photo.jpg" alt="Tripti Pandey" onerror="this.src='https://via.placeholder.com/360?text=Tripti'">
       </div>
-
-      <div class="intro">
-        <div class="name">Tripti Pandey</div>
+      <div>
+        <h1 class="name">Tripti Pandey</h1>
         <div class="title">I code therefore I am — <span style="color:var(--accent2)">DevOps Engineer</span> | Cloud Learner | Creative Thinker</div>
-
         <div class="typed" id="typed"></div>
-
         <p>I’m passionate about building efficient systems, exploring AWS and cloud platforms, and continuously learning to improve my skills. My approach blends creativity, technical precision, and a drive to make ideas come alive.</p>
-
         <div class="hero-actions">
-          <a class="btn primary" href="#projects">See Projects</a>
-          <a class="btn" href="https://github.com/TriptiP-Code" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn" href="https://www.linkedin.com/in/tripti-pandey-81110822a/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#projects" class="btn primary">See Projects</a>
+          <a href="https://github.com/TriptiP-Code" target="_blank" class="btn">GitHub</a>
+          <a href="https://www.linkedin.com/in/tripti-pandey-81110822a/" target="_blank" class="btn">LinkedIn</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about" class="hidden">
     <div class="about-grid">
-      <div style="flex:1" class="about-card">
+      <div class="about-card">
         <h3>About</h3>
         <p>I’m passionate about building efficient systems, exploring AWS and cloud platforms, and continuously learning to improve my skills. My approach blends creativity, technical precision, and a drive to make ideas come alive.</p>
       </div>
-
-      <div style="width:320px" class="about-card">
+      <div class="about-card">
         <h3>Quick Info</h3>
         <p style="color:var(--muted)">Location: India<br>Role: DevOps Engineer<br>Availability: Open to opportunities</p>
-        <div style="margin-top:12px">
-          <a class="resume-btn" href="Tripti_Resume.pdf" download>📄 Download Resume</a>
+        <div style="margin-top:16px">
+          <a class="resume-btn" href="Tripti_Resume.pdf" download>Download Resume</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
   <section id="skills" class="hidden">
-    <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Skills</h2>
+    <h2 style="color:var(--accent);font-family:'Orbitron',sans-serif;margin-bottom:16px">Skills</h2>
     <div class="skills">
-      <div class="skill">💻 HTML & CSS</div>
-      <div class="skill">🟨 JavaScript</div>
-      <div class="skill">🐳 Docker</div>
-      <div class="skill">☁️ AWS</div>
-      <div class="skill">🚀 Jenkins</div>
-      <div class="skill">📦 Kubernetes</div>
-      <div class="skill">🪵 Splunk</div>
-      <div class="skill">⚙️ Linux</div>
-      <div class="skill">🧠 Problem Solving</div>
-      <div class="skill">📝 Communication</div>
+      <div class="skill">HTML & CSS</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">Docker</div>
+      <div class="skill">AWS</div>
+      <div class="skill">Jenkins</div>
+      <div class="skill">Kubernetes</div>
+      <div class="skill">Splunk</div>
+      <div class="skill">Linux</div>
+      <div class="skill">GIT</div>
+      <div class="skill">Problem Solving</div>
+      <div class="skill">Communication</div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects" class="hidden">
-    <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Selected Projects</h2>
-
-    <p style="color:var(--muted); margin-bottom:10px">Click a project card to open the repository on GitHub.</p>
-
+    <h2 style="color:var(--accent);font-family:'Orbitron',sans-serif;margin-bottom:16px">Selected Projects</h2>
+    <p style="color:var(--muted);margin-bottom:16px">Click a card to visit the GitHub repo</p>
     <div class="projects-grid">
-
-      <!-- Project 1 -->
-      <a class="proj-card" href="https://github.com/TriptiP-Code/ci-cd-pipeline" target="_blank" rel="noopener">
-        <img class="proj-thumb" src="https://placehold.co/800x400?text=CI%2FCD+Pipeline" alt="CI/CD pipeline thumbnail">
+      <a href="https://github.com/TriptiP-Code/tripti-devops-project/tree/main/Project-1" target="_blank" class="proj-card">
+        <img class="proj-thumb" src="https://placehold.co/800x450?text=CI/CD+Pipeline" alt="">
         <div class="proj-body">
           <div class="proj-title">CI/CD Pipeline</div>
-          <div class="proj-desc">Automated deployment using Jenkins, Docker and scripted infrastructure for repeatable releases.</div>
-          <div class="proj-links">
-            <span class="link-icon">View on GitHub ↗</span>
-          </div>
+          <div class="proj-desc">Automated deployment using Jenkins, Docker, and infrastructure as code.</div>
+          <div class="link-icon">View on GitHub</div>
         </div>
       </a>
-
-      <!-- Project 2 -->
-      <a class="proj-card" href="https://github.com/TriptiP-Code/kubernetes-setup" target="_blank" rel="noopener">
-        <img class="proj-thumb" src="https://placehold.co/800x400?text=Kubernetes+Setup" alt="Kubernetes thumbnail">
+      <a href="https://github.com/TriptiP-Code/kubernetes-setup" target="_blank" class="proj-card">
+        <img class="proj-thumb" src="https://placehold.co/800x450?text=Kubernetes+Setup" alt="">
         <div class="proj-body">
           <div class="proj-title">Kubernetes Setup</div>
-          <div class="proj-desc">Helm charts and EKS configuration for highly available microservices deployments.</div>
-          <div class="proj-links">
-            <span class="link-icon">View on GitHub ↗</span>
-          </div>
+          <div class="proj-desc">EKS cluster with Helm charts and high-availability microservices.</div>
+          <div class="link-icon">View on GitHub</div>
         </div>
       </a>
-
-      <!-- Project 3 -->
-      <a class="proj-card" href="https://github.com/TriptiP-Code/portfolio" target="_blank" rel="noopener">
-        <img class="proj-thumb" src="https://placehold.co/800x400?text=Portfolio+Website" alt="Portfolio thumbnail">
+      <a href="https://github.com/TriptiP-Code/portfolio" target="_blank" class="proj-card">
+        <img class="proj-thumb" src="https://placehold.co/800x450?text=Portfolio" alt="">
         <div class="proj-body">
-          <div class="proj-title">Personal Portfolio</div>
-          <div class="proj-desc">This portfolio — a sleek single-page, responsive site with dark interstellar styling.</div>
-          <div class="proj-links">
-            <span class="link-icon">View on GitHub ↗</span>
-          </div>
+          <div class="proj-title">This Portfolio</div>
+          <div class="proj-desc">A sleek, animated single-page portfolio with interstellar background.</div>
+          <div class="link-icon">View on GitHub</div>
         </div>
       </a>
-
     </div>
   </section>
 
-<!-- RESUME -->
-<section id="resume" class="hidden">
-  <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Resume</h2>
-  <p style="color:var(--muted); margin-bottom:20px;">
-    Download a PDF copy of my resume for a full overview of experience and skills.
-  </p>
-  <a class="resume-btn" href="Tripti_Resume.pdf" download style="margin-top:15px; display:inline-block;">
-    📄 Download Resume
-  </a>
-</section>
+  <section id="resume" class="hidden">
+    <h2 style="color:var(--accent);font-family:'Orbitron',sans-serif;margin-bottom:16px">Resume</h2>
+    <p style="color:var(--muted);margin-bottom:24px">Download the latest version of my resume</p>
+    <a class="resume-btn" href="Tripti_Resume.pdf" download>Download Resume</a>
+  </section>
 
-
-<!-- CONTACT -->
-<section id="contact" class="hidden">
-  <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Contact</h2>
-  <div class="contact">
-    <p style="color:var(--muted); margin-bottom:18px;">
-      Let’s connect — you can reach me at 
-      <b style="color:#eaf8ff">tripti@example.com</b> 
-      or on LinkedIn:
-    </p>
-
-    <div style="display:flex; gap:12px; flex-wrap:wrap;">
-      <a class="btn" href="https://www.linkedin.com/in/tripti-pandey-81110822a/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/TriptiP-Code" target="_blank" rel="noopener">GitHub</a>
+  <section id="contact" class="hidden">
+    <h2 style="color:var(--accent);font-family:'Orbitron',sans-serif;margin-bottom:16px">Contact</h2>
+    <p style="color:var(--muted);margin-bottom:20px">Feel free to reach out!</p>
+    <p>Email: <b style="color:#eaf8ff">tripti@example.com</b></p>
+    <div style="margin-top:20px;display:flex;gap:16px;flex-wrap:wrap">
+      <a href="https://linkedin.com/in/tripti-pandey-81110822a" target="_blank" class="btn">LinkedIn</a>
+      <a href="https://github.com/TriptiP-Code" target="_blank" class="btn">GitHub</a>
     </div>
-  </div>
-</section>
+  </section>
 
+  <section id="mylearning" class="hidden">
+    <h2 style="color:var(--accent);font-family:'Orbitron',sans-serif;margin-bottom:16px">My Learning</h2>
+    <p style="color:var(--muted);margin-bottom:16px">Click any subject to view my notes</p>
+    <div class="subjects-grid">
+      <!-- <a href="#" class="subject-btn" data-txt="html-css.txt">HTML & CSS</a> -->
+      <!-- <a href="#" class="subject-btn" data-txt="javascript.txt">JavaScript</a> -->
+      <a href="#" class="subject-btn" data-txt="docker.txt">Docker</a>
+      <a href="#" class="subject-btn" data-txt="aws.txt">AWS</a>
+      <a href="#" class="subject-btn" data-txt="jenkins.txt">Jenkins</a>
+      <a href="#" class="subject-btn" data-txt="kubernetes.txt">Kubernetes</a>
+      <a href="#" class="subject-btn" data-txt="splunk.txt">Splunk</a>
+      <a href="#" class="subject-btn" data-txt="linux.txt">Linux</a>
+      <a href="#" class="subject-btn" data-txt="git.txt">GIT</a>
+    </div>
+    <div id="learning-content">
+      <pre id="txt-display"></pre>
+    </div>
+  </section>
 
-  <footer>
-    © 2025 Tripti Pandey — Built with ❤️
-  </footer>
-
+  <footer>© 2025 Tripti Pandey — Built with ❤️ and a lot of coffee</footer>
 </main>
 
-<!-- Scripts: typing + reveal on scroll -->
 <script>
-  // Typing effect (simple)
-  const phrases = [
-    "DevOps Engineer",
-    "Cloud Learner",
-    "Creative Thinker",
-    "I code therefore I am"
-  ];
-  const typedElem = document.getElementById('typed');
-  let idxP = 0, idxC = 0, forward = true;
-  function typeLoop(){
-    const current = phrases[idxP];
-    if(forward){
-      idxC++;
-      typedElem.textContent = current.slice(0, idxC);
-      if(idxC === current.length){ forward = false; setTimeout(typeLoop, 1000); return; }
-    } else {
-      idxC--;
-      typedElem.textContent = current.slice(0, idxC);
-      if(idxC === 0){ forward = true; idxP = (idxP+1) % phrases.length; setTimeout(typeLoop, 300); return; }
+// Typing effect
+const phrases = ["DevOps Engineer", "Cloud Learner", "Creative Thinker", "I code therefore I am"];
+let p = 0, c = 0, forward = true;
+const typed = document.getElementById('typed');
+function type() {
+  if (forward) {
+    typed.textContent = phrases[p].substring(0, c += 1);
+    if (c > phrases[p].length) { forward = false; setTimeout(type, 1500); }
+    else setTimeout(type, 80);
+  } else {
+    typed.textContent = phrases[p].substring(0, c -= 1);
+    if (c === 0) { forward = true; p = (p + 1) % phrases.length; setTimeout(type, 500); }
+    else setTimeout(type, 40);
+  }
+}
+type();
+
+// Reveal on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting && e.target.style.display !== 'none') e.target.classList.add('show'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+
+// Section toggle logic
+let fullMode = true;
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.getAttribute('href').substring(1);
+    document.querySelectorAll('main section').forEach(s => s.style.display = s.id === id ? 'block' : 'none');
+    fullMode = false;
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+document.getElementById('logo').addEventListener('click', () => {
+  document.querySelectorAll('main section').forEach(s => s.style.display = 'block');
+  fullMode = true;
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// My Learning .txt loader
+document.querySelectorAll('.subject-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const file = btn.dataset.txt;
+    fetch(file)
+      .then(r => r.ok ? r.text() : Promise.reject())
+      .then(text => {
+        document.getElementById('txt-display').textContent = text;
+        document.getElementById('learning-content').style.display = 'block';
+        document.getElementById('learning-content').scrollIntoView({behavior:'smooth'});
+      })
+      .catch(() => {
+        document.getElementById('txt-display').textContent = 'File not found — make sure ' + file + ' is in the same folder!';
+        document.getElementById('learning-content').style.display = 'block';
+      });
+  });
+});
+
+// REAL INTERSTELLAR ANIMATION (exactly like the reference site)
+particlesJS('particles-js', {
+  "particles": {
+    "number": { "value": 180, "density": { "enable": true, "value_area": 800 } },
+    "color": { "value": "#ffffff" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.8, "random": true, "anim": { "enable": true, "speed": 0.8, "opacity_min": 0.1 } },
+    "size": { "value": 2, "random": true },
+    "line_linked": { "enable": false },
+    "move": {
+      "enable": true,
+      "speed": 0.6,
+      "direction": "none",
+      "random": true,
+      "straight": false,
+      "out_mode": "out"
     }
-    setTimeout(typeLoop, forward ? 80 : 40);
-  }
-  typeLoop();
-
-  // Simple reveal on scroll (IntersectionObserver)
-  const hidden = document.querySelectorAll('.hidden');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e=>{
-      if(e.isIntersecting) e.target.classList.add('show');
-    });
-  }, { threshold: 0.15 });
-  hidden.forEach(s => io.observe(s));
-
-  // Smooth nav highlight (optional: simple)
-  const navLinks = document.querySelectorAll('header nav a');
-  function onScrollHighlight(){
-    const sections = Array.from(document.querySelectorAll('main section'));
-    const pos = window.scrollY + window.innerHeight/3;
-    let currentId = '';
-    sections.forEach(sec=>{
-      if(sec.offsetTop <= pos) currentId = sec.id;
-    });
-    navLinks.forEach(a=>{
-      a.style.opacity = (a.getAttribute('href') === '#' + currentId) ? '1' : '0.7';
-    });
-  }
-  window.addEventListener('scroll', onScrollHighlight);
-  onScrollHighlight();
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": true, "mode": "repulse" },
+      "onclick": { "enable": true, "mode": "push" },
+      "resize": true
+    }
+  },
+  "retina_detect": true
+});
 </script>
-
 </body>
 </html>

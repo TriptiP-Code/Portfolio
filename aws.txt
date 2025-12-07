@@ -1,0 +1,470 @@
+What is AWS?
+
+Amazon Web Services (AWS) is the world’s largest cloud provider offering scalable infrastructure services such as compute, storage, networking, databases, security, and DevOps tools.
+
+As a DevOps engineer, you mainly use AWS for:
+
+Deploying and running applications
+
+Managing infrastructure
+
+Automation
+
+CI/CD pipelines
+
+Monitoring/logging
+
+Containers & Kubernetes (EKS)
+
+🏗️ AWS Global Infrastructure
+Main Concepts
+
+Region → Geographical area (e.g., us-east-1, ap-south-1)
+
+Availability Zones (AZ) → Data centers inside a Region
+
+Edge Locations → Used by CloudFront for caching
+
+VPC → Virtual Private Cloud (your private network in AWS)
+
+☁️ Core AWS Services a DevOps Engineer Must Know
+EC2 (Elastic Compute Cloud)
+✔️ What is EC2?
+
+Virtual servers in the cloud.
+
+EC2 Key Concepts:
+
+Instance types (t2, t3, m5, c5)
+
+Security Groups (firewall rules)
+
+Key Pairs (SSH access)
+
+AMIs (Amazon Machine Images)
+
+EBS (Elastic Block Storage)
+
+Auto Scaling Groups
+
+Load Balancers (ALB/NLB)
+
+Common Commands (AWS CLI)
+aws ec2 describe-instances
+aws ec2 start-instances --instance-ids <id>
+aws ec2 stop-instances --instance-ids <id>
+
+S3 (Simple Storage Service)
+✔️ What is S3?
+
+Object storage for:
+
+Logs
+
+Backups
+
+Static websites
+
+Artifacts
+
+Terraform remote state
+
+Important Concepts:
+
+Buckets
+
+Objects
+
+Versioning
+
+Lifecycle rules
+
+Storage Classes (Standard, IA, Glacier)
+
+Encryption (SSE-S3, SSE-KMS)
+
+Static Website Hosting Example:
+S3 Bucket → Upload HTML → Enable Static Hosting → Public Access → CloudFront (optional)
+
+IAM (Identity and Access Management)
+✔️ Purpose
+
+Securely manage access to AWS resources.
+
+Key IAM Components:
+
+Users
+
+Groups
+
+Roles
+
+Policies (JSON documents)
+
+MFA (Multi-factor authentication)
+
+Example Policy:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": "s3:*",
+    "Resource": "*"
+  }]
+}
+
+VPC (Virtual Private Cloud)
+✔️ What is VPC?
+
+Your isolated cloud network.
+
+VPC Components:
+
+Subnets (public & private)
+
+Route Tables
+
+Internet Gateway (IGW)
+
+NAT Gateway
+
+NACLs (Network ACLs — stateless)
+
+Security Groups (stateful firewall)
+
+VPC Peering
+
+VPC Endpoints
+
+Load Balancers
+
+Typical DevOps Architecture:
+VPC
+ ├── Public Subnet → ALB / Bastion Host
+ └── Private Subnet → EC2 / EKS / Databases
+
+EBS (Elastic Block Storage)
+
+Storage for EC2 instances.
+
+Types:
+
+gp2/gp3 — SSD
+
+io1/io2 — high IOPS SSD
+
+st1/sc1 — HDD
+
+Supports:
+
+Snapshots
+
+Encryption
+
+Resize without downtime
+
+ECR (Elastic Container Registry)
+
+Container image registry for Docker images.
+
+Commands:
+
+aws ecr create-repository --repository-name myapp
+aws ecr get-login-password | docker login ...
+docker push <ecr-repo-url>
+
+
+Used with ECS/EKS.
+
+ECS (Elastic Container Service)
+Types of ECS Launch:
+
+EC2 mode → runs on EC2 instances
+
+Fargate mode → serverless containers
+
+Used for:
+
+Microservices
+
+APIs
+
+Batch processing
+
+EKS (Elastic Kubernetes Service)
+
+Managed Kubernetes service.
+
+Allows:
+
+Deploying containers using Kubernetes
+
+Integrating with AWS VPC CNI
+
+Using EC2 or Fargate nodes
+
+Used heavily by DevOps teams.
+
+Lambda (Serverless Functions)
+✔️ Key Features:
+
+Runs code without servers
+
+Event-driven
+
+Integrates with S3, SNS, SQS, API Gateway
+
+Common Use Cases:
+
+Image processing
+
+Automation scripts
+
+CloudWatch log processing
+
+Infrastructure automation
+
+RDS (Relational Database Service)
+
+Supports:
+
+MySQL
+
+PostgreSQL
+
+MariaDB
+
+Oracle
+
+SQL Server
+
+Aurora
+
+Features:
+
+Automated backups
+
+Multi-AZ
+
+Read replicas
+
+DynamoDB
+
+Fully managed NoSQL database.
+
+Great for:
+
+Highly scalable applications
+
+Serverless apps
+
+Low latency workloads
+
+CloudFront
+
+Content Delivery Network (CDN).
+
+Used with:
+
+S3 static sites
+
+API caching
+
+Security (WAF + Shield)
+
+Route 53 (DNS Service)
+
+Features:
+
+Domain registration
+
+DNS hosting
+
+Health checks
+
+Routing policies (weighted, failover, latency-based)
+
+CloudFormation
+
+Infrastructure as Code (IaC) using YAML/JSON.
+
+Benefits:
+
+Reproducible infrastructure
+
+Version control
+
+Automated deployments
+
+Example:
+
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+
+Terraform (3rd-party IaC)
+
+Better choice for multi-cloud DevOps.
+
+Example:
+
+resource "aws_instance" "web" {
+  ami           = "ami-123"
+  instance_type = "t2.micro"
+}
+
+AWS DevOps Tools
+CodeCommit
+
+Git repository service.
+
+CodeBuild
+
+Build automation (like Jenkins builder).
+
+CodeDeploy
+
+Automated deployments.
+
+CodePipeline
+
+CI/CD pipeline orchestration.
+
+Monitoring & Logging on AWS
+CloudWatch
+
+Metrics (CPU, memory, etc.)
+
+Logs
+
+Alarms
+
+Dashboards
+
+AWS X-Ray
+
+Distributed tracing.
+
+CloudTrail
+
+Audits API calls (security logging).
+
+Security Essentials for DevOps
+
+Least privilege IAM
+
+MFA for root and users
+
+Use IAM Roles (not access keys)
+
+Encrypt EBS, S3, RDS
+
+Use Security Groups over NACLs
+
+Store secrets in AWS Secrets Manager or Parameter Store
+
+Networking & Load Balancing
+ELB Types:
+
+ALB → HTTP/HTTPS
+
+NLB → High performance TCP/UDP
+
+GLB → Gateway Load Balancer
+
+Common Use Case:
+User → Route 53 → ALB → EC2/ECS/EKS → Database (RDS)
+
+SQS (Simple Queue Service)
+
+Used for:
+
+Decoupling microservices
+
+Worker queues
+
+Async processing
+
+Types:
+
+Standard
+
+FIFO (First-In-First-Out)
+
+SNS (Simple Notification Service)
+
+Publish/subscribe messaging.
+
+Used for:
+
+Alerts
+
+Notifications
+
+Fan-out messaging
+
+Triggering Lambdas
+
+AWS Cost Optimization Basics
+
+Use EC2 Spot Instances
+
+Enable S3 lifecycle policies
+
+Use Auto Scaling
+
+Use Reserved Instances for EC2/RDS
+
+Use Cost Explorer
+
+Track costs with budgets
+
+DevOps AWS Learning Path
+
+EC2, S3, IAM
+
+VPC & Networking
+
+EBS, EFS, Storage
+
+Load Balancers & Auto Scaling
+
+CloudWatch & CloudTrail
+
+Containers (ECR, ECS, EKS)
+
+CI/CD (CodePipeline, CodeBuild, CodeDeploy)
+
+Infrastructure as Code (CloudFormation/Terraform)
+
+Serverless (Lambda)
+
+Advanced security + logs
+
+Quick AWS Commands (CLI)
+Configure AWS CLI
+aws configure
+
+S3
+aws s3 ls
+aws s3 cp file.txt s3://mybucket/
+
+EC2
+aws ec2 describe-instances
+
+CloudFormation
+aws cloudformation deploy --template-file stack.yaml --stack-name mystack
+
+Example Project Architecture for DevOps (AWS)
+Route53
+   ↓
+CloudFront (optional)
+   ↓
+ALB
+   ↓
+ECS/EKS
+   ↓
+RDS/DynamoDB
+   ↓
+CloudWatch + X-Ray + CloudTrail

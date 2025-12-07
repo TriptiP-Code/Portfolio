@@ -1,0 +1,382 @@
+🔧 What is Jenkins?
+
+Jenkins is an open-source automation server used to build, test, and deploy applications.
+A DevOps engineer uses Jenkins mainly for:
+
+CI/CD pipelines
+
+Automated builds
+
+Automated testing
+
+Deployment to servers / Kubernetes
+
+Integrating with GitHub, Docker, AWS, etc.
+
+Managing jobs, agents, plugins
+
+🏗️ Jenkins Architecture
+Jenkins Core Components
+1. Master / Controller
+
+Runs Jenkins UI
+
+Manages jobs & scheduling
+
+Sends tasks to agents
+
+Stores all configurations
+
+2. Agents / Nodes
+
+Execute builds
+
+Can be:
+
+On-prem servers
+
+Cloud VMs
+
+Docker containers
+
+Kubernetes pods (Kubernetes Plugin)
+
+Build Flow
+User/Git → Jenkins Master → Agents → Build Output
+
+🚀 Installing Jenkins
+On Ubuntu:
+sudo apt update
+sudo apt install openjdk-11-jdk
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo apt-add-repository "deb https://pkg.jenkins.io/debian-stable binary/"
+sudo apt install jenkins
+sudo systemctl start jenkins
+
+Access Jenkins:
+http://localhost:8080
+
+🧩 Jenkins Key Concepts
+✔️ Jobs (Freestyle vs Pipeline)
+Freestyle Jobs
+
+Simple UI-based configuration
+
+Not recommended for real DevOps pipelines
+
+Pipeline Jobs
+
+Created using Jenkinsfile
+
+Best for automation, CI/CD, code review
+
+✔️ Jenkinsfile (Pipeline-as-Code)
+
+Two types:
+
+1. Declarative Pipeline (recommended)
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        echo "Building..."
+      }
+    }
+    stage('Test') {
+      steps {
+        echo "Testing..."
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo "Deploying..."
+      }
+    }
+  }
+}
+
+2. Scripted Pipeline
+
+More flexible but complex.
+
+✔️ Pipelines Stages & Steps
+Common Stages:
+
+Checkout Code
+
+Build
+
+Static Code Analysis
+
+Unit Testing
+
+Docker Build
+
+Push to ECR/GCR/DockerHub
+
+Deploy to server/EKS/ECS
+
+🔌 Jenkins Plugins (Must Know for DevOps)
+Plugin	Purpose
+Git	Integrates GitHub/GitLab/Bitbucket
+Pipeline	Enables Jenkinsfile
+Docker	Build/push Docker images
+Kubernetes Plugin	Dynamic pod agents
+Blue Ocean	Modern UI for pipelines
+Credentials Binding	Handle secrets
+Slack Notification	Send alerts to Slack
+SonarQube Plugin	Code quality checks
+JUnit	Test reporting
+🔐 Credentials in Jenkins
+
+Stored in:
+
+Manage Jenkins → Credentials
+
+
+Types:
+
+Username/Password
+
+SSH Keys
+
+Secret Text
+
+AWS Access Keys
+
+Certificates
+
+Use inside pipelines:
+
+withCredentials([string(credentialsId: 'my-secret', variable: 'TOKEN')]) {
+    sh "echo $TOKEN"
+}
+
+🔄 Jenkins Agents (Nodes)
+Types of Agents:
+
+SSH Agent
+
+JNLP Agent
+
+Docker Agent
+
+Kubernetes Pod Agent
+
+Declarative pipeline with Docker agent:
+pipeline {
+  agent {
+    docker { image 'maven:3.9.1' }
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh "mvn package"
+      }
+    }
+  }
+}
+
+🐳 Jenkins + Docker (Important for DevOps)
+Build a Docker Image:
+stage('Docker Build') {
+  steps {
+    sh 'docker build -t myapp .'
+  }
+}
+
+Push to DockerHub:
+withCredentials([usernamePassword(credentialsId: 'docker-creds',
+                                  passwordVariable: 'PASS',
+                                  usernameVariable: 'USER')]) {
+  sh '''
+    echo "$PASS" | docker login -u "$USER" --password-stdin
+    docker push myapp
+  '''
+}
+
+☸️ Jenkins + Kubernetes (EKS/ECS)
+Using Kubernetes plugin:
+
+Jenkins spins up a pod agent on-demand
+
+Each build is executed in a clean environment
+
+Example:
+
+pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+      apiVersion: v1
+      kind: Pod
+      spec:
+        containers:
+        - name: maven
+          image: maven:3.8.6
+          command:
+          - cat
+          tty: true
+      '''
+    }
+  }
+}
+
+🧪 Testing & Code Quality Tools
+With Jenkins:
+
+JUnit
+
+SonarQube
+
+Selenium
+
+OWASP Dependency Check
+
+SonarQube stage:
+
+stage('SonarQube Analysis') {
+  steps {
+    withSonarQubeEnv('sonarqube') {
+      sh 'mvn sonar:sonar'
+    }
+  }
+}
+
+🚢 Deployment Strategies with Jenkins
+Common DevOps Deployment Methods:
+
+SSH to EC2 & deploy
+
+Copy files via SCP
+
+Docker container deployment
+
+Kubernetes (kubectl apply)
+
+ECS deploy via AWS CLI
+
+Lambda deploy
+
+CloudFormation/Terraform deploy
+
+Example: Deploy to Kubernetes
+stage('Deploy to K8s') {
+  steps {
+    sh "kubectl apply -f k8s/deployment.yaml"
+  }
+}
+
+🔍 Webhooks (Triggering Jenkins Automatically)
+GitHub Webhook URL:
+http://<jenkins_url>/github-webhook/
+
+Trigger Pipeline on Push:
+triggers {
+  githubPush()
+}
+
+📊 Jenkins Monitoring & Logs
+Logs:
+
+Jenkins System Log
+
+Build logs
+
+/var/log/jenkins/jenkins.log
+
+Plugins:
+
+Monitoring Plugin
+
+Audit Trail
+
+Prometheus metrics plugin
+
+🛠️ Backup & Restore (Important)
+Backup:
+
+Jenkins home directory: /var/lib/jenkins
+Includes:
+
+Jobs
+
+Plugins
+
+Credentials
+
+Configuration
+
+Restore:
+
+Stop Jenkins
+
+Replace Jenkins home
+
+Start Jenkins
+
+🧱 Jenkins Best Practices (DevOps Standard)
+
+Always use Pipeline (Jenkinsfile)
+
+Use agents, not the master
+
+Use multibranch pipelines
+
+Store all secrets in Credentials store
+
+Use Parameterized builds
+
+Use Docker/Kubernetes agents for clean builds
+
+Use Blue Ocean for visualizations
+
+Use Shared Libraries for reusable pipeline code
+
+Backup Jenkins regularly
+
+Keep Jenkins lightweight (move heavy tasks to agents)
+
+📁 Example Jenkinsfile (Full DevOps Flow)
+pipeline {
+  agent any
+
+  stages {
+
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/myorg/myapp.git'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'mvn clean package'
+      }
+    }
+
+    stage('Docker Build') {
+      steps {
+        sh 'docker build -t myapp:latest .'
+      }
+    }
+
+    stage('Push Image') {
+      steps {
+        withCredentials([string(credentialsId: 'docker-token', variable: 'DOCKER_TOKEN')]) {
+          sh '''
+            echo $DOCKER_TOKEN | docker login -u myuser --password-stdin
+            docker push myapp:latest
+          '''
+        }
+      }
+    }
+
+    stage('Deploy to Kubernetes') {
+      steps {
+        sh 'kubectl apply -f k8s/'
+      }
+    }
+  }
+}

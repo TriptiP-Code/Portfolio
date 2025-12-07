@@ -1,0 +1,333 @@
+📌 What is Kubernetes?
+
+Kubernetes (K8s) is a container orchestration platform that automates:
+
+Deployment
+
+Scaling
+
+Networking
+
+Self-healing (auto-restart, auto-replace)
+
+Load balancing
+
+It manages containers (usually Docker) at scale using a cluster of machines.
+
+🏗️ Kubernetes Architecture Overview
+Cluster Components
+
+A Kubernetes cluster has:
+
+1. Control Plane (Master Node)
+
+Responsible for managing and maintaining the cluster.
+
+Component	Purpose
+API Server	Entry point for kubectl / API calls.
+Controller Manager	Handles controllers (replica, endpoint, namespace lifecycle).
+Scheduler	Assigns Pods to Nodes.
+etcd	Key-value store for cluster state.
+2. Worker Nodes
+
+Run the actual workloads (Pods).
+
+Component	Purpose
+kubelet	Talks to API server; manages containers.
+kube-proxy	Manages cluster networking rules.
+Container Runtime	Docker / containerd / CRI-O.
+🧱 Core Kubernetes Concepts
+## Pod
+
+Smallest deployable unit.
+
+Runs one or more containers.
+
+Usually one container per Pod.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+
+## ReplicaSet
+
+Ensures a specified number of Pods are always running.
+
+If a Pod fails → ReplicaSet creates a new one.
+
+apiVersion: apps/v1
+kind: ReplicaSet
+...
+
+## Deployment
+
+A higher-level object that manages ReplicaSets.
+
+👍 Widely used for applications.
+✔ Supports rolling updates, rollbacks.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: app
+          image: myapp:v1
+
+## Service
+
+Exposes Pods to the network.
+
+Types:
+
+ClusterIP (internal only)
+
+NodePort (external through port on node)
+
+LoadBalancer (cloud load balancer)
+
+kind: Service
+apiVersion: v1
+spec:
+  type: NodePort
+
+## Ingress
+
+Provides HTTP/HTTPS routing to services.
+Used for real-world apps.
+
+## Namespace
+
+Logical separation inside a cluster.
+
+Examples:
+
+dev
+
+test
+
+prod
+
+## ConfigMap & Secret
+
+Used for configuration.
+
+ConfigMap → non-sensitive data
+
+Secret → encrypted sensitive data
+
+## Volume & PersistentVolume (PV)
+
+For persistent storage.
+
+Types:
+
+hostPath
+
+NFS
+
+AWS EBS
+
+GCP Persistent Disk
+
+PersistentVolumeClaim (PVC) requests storage from PV.
+
+☸️ kubectl — Must-Know Commands
+Cluster Info
+kubectl cluster-info
+kubectl get nodes
+
+Workloads
+kubectl get pods
+kubectl get deployments
+kubectl get rs
+
+Create/Apply
+kubectl apply -f deployment.yaml
+kubectl delete -f deployment.yaml
+
+Debug / Logs
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+kubectl exec -it <pod-name> -- bash
+
+🔄 Deployment Strategies (DevOps Must Know)
+Rolling Update (default)
+
+Gradually replaces old Pods with new Pods.
+
+Recreate
+
+Destroys all old Pods → then deploys new ones.
+
+Blue–Green Deployment
+
+Two environments:
+
+Blue = current
+
+Green = new version
+Switch traffic after testing.
+
+Canary Deployment
+
+Small % of users see new version first.
+
+📦 Container Lifecycle in Kubernetes
+Pod Phases
+
+Pending
+
+Running
+
+Succeeded
+
+Failed
+
+Unknown
+
+Container Lifecycle Hooks
+
+postStart
+
+preStop
+
+Useful for graceful shutdown.
+
+🧩 Probes (Health Checks)
+Liveness Probe
+
+Restarts container if unhealthy.
+
+Readiness Probe
+
+Controls if Pod should receive traffic.
+
+Startup Probe
+
+For slow-start apps.
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+
+🔐 RBAC (Role-Based Access Control)
+Objects:
+
+Role
+
+ClusterRole
+
+RoleBinding
+
+ClusterRoleBinding
+
+📡 Networking Basics
+Kubernetes Networking Rules:
+
+Every Pod gets its own IP.
+
+All Pods can talk to each other.
+
+No NAT inside cluster.
+
+kube-proxy handles service networking.
+
+Networking Plugins:
+
+Calico
+
+Flannel
+
+WeaveNet
+
+⚙️ Autoscaling in Kubernetes
+Horizontal Pod Autoscaler (HPA)
+
+Scales Pods based on CPU/memory/custom metrics.
+
+kubectl autoscale deployment myapp --cpu-percent=50 --min=2 --max=10
+
+📊 Monitoring & Logging
+
+Tools:
+
+Prometheus + Grafana
+
+ELK / EFK
+
+Metrics Server
+
+kubectl top
+
+💥 Troubleshooting Checklist
+1. Pod Issues
+kubectl describe pod <pod>
+kubectl logs <pod>
+
+2. Deployment Issues
+kubectl rollout status deployment/myapp
+kubectl rollout undo deployment/myapp
+
+3. Node Issues
+kubectl describe node <node>
+
+📁 Example Project Structure (Best Practice)
+k8s/
+  deployment.yaml
+  service.yaml
+  ingress.yaml
+  configmap.yaml
+  secret.yaml
+  hpa.yaml
+
+🛠️ YAML Template (Reusable)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample
+  template:
+    metadata:
+      labels:
+        app: sample
+    spec:
+      containers:
+        - name: sample
+          image: sample:1.0
+          ports:
+            - containerPort: 80
+
+🎯 Learning Path for DevOps
+
+Learn YAML basics
+
+Pods, Deployments, Services
+
+ConfigMaps, Secrets
+
+Storage (PVC, PV)
+
+Networking (Service, Ingress)
+
+Autoscaling (HPA)
+
+CI/CD with Kubernetes (Jenkins / GitHub Actions)
+
+Helm Charts
+
+Monitoring + Logging

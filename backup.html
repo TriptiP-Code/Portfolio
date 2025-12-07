@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tripti Pandey — Portfolio</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1: #05040a; /* deep space */
+    --bg2: #090712; /* darker */
+    --nebula: rgba(124,58,237,0.08); /* purple nebula */
+    --accent: #6ee7ff; /* cyan neon */
+    --accent2: #b388ff; /* violet */
+    --card: #0b0b10;
+    --muted: #9aa3b2;
+    --border: #000;
+  }
+  /* Reset */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: 
+      /* Nebula layers with subtle animation */
+      radial-gradient(ellipse at 20% 30%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 10% 80%, rgba(120, 200, 255, 0.1) 0%, transparent 50%),
+      /* Base gradient */
+      radial-gradient(1200px 600px at 10% 10%, rgba(92, 72, 170, 0.12), transparent 6%),
+      radial-gradient(900px 450px at 90% 80%, rgba(14, 165, 233, 0.06), transparent 8%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    scroll-behavior: smooth;
+    overflow-x:hidden;
+    position:relative;
+    padding-top:66px; /* minimal gap after header */
+    /* Animate nebula pulse */
+    animation: nebulaPulse 20s ease-in-out infinite alternate;
+  }
+  @keyframes nebulaPulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+  }
+  /* stars - Enhanced with multiple layers for depth */
+  body::before, body::after {
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, #ffffff22 50%, transparent 51%),
+      radial-gradient(1px 1px at 20% 40%, #ffffff22 50%, transparent 51%),
+      radial-gradient(1px 1px at 40% 60%, #ffffff22 50%, transparent 51%),
+      radial-gradient(1px 1px at 70% 80%, #ffffff22 50%, transparent 51%),
+      radial-gradient(1px 1px at 80% 20%, #ffffff22 50%, transparent 51%);
+    opacity:0.55;
+    mix-blend-mode:screen;
+    animation: twinkle 8s linear infinite;
+  }
+  body::after {
+    background-image:
+      radial-gradient(2px 2px at 50% 10%, #ffffff22 50%, transparent 51%),
+      radial-gradient(2px 2px at 80% 30%, #ffffff22 50%, transparent 51%),
+      radial-gradient(2px 2px at 30% 80%, #ffffff22 50%, transparent 51%);
+    opacity:0.35;
+    animation-duration:12s;
+  }
+  /* Additional star layers */
+  .stars1, .stars2 {
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+  }
+  .stars1 {
+    background-image:
+      radial-gradient(0.5px 0.5px at 15% 25%, #ffffff11 50%, transparent 51%),
+      radial-gradient(0.5px 0.5px at 35% 55%, #ffffff11 50%, transparent 51%),
+      radial-gradient(0.5px 0.5px at 65% 75%, #ffffff11 50%, transparent 51%);
+    opacity:0.4;
+    animation: twinkle 6s linear infinite reverse;
+    z-index: -1;
+  }
+  .stars2 {
+    background-image:
+      radial-gradient(3px 3px at 45% 15%, #ffffff33 50%, transparent 51%),
+      radial-gradient(3px 3px at 75% 45%, #ffffff33 50%, transparent 51%),
+      radial-gradient(3px 3px at 25% 85%, #ffffff33 50%, transparent 51%);
+    opacity:0.25;
+    animation: twinkle 15s linear infinite;
+    z-index: -2;
+  }
+  @keyframes twinkle { 
+    0%{transform:translateY(0) rotate(0deg)} 
+    50%{transform:translateY(1px) rotate(180deg)} 
+    100%{transform:translateY(0) rotate(360deg)} 
+  }
+  /* Header / Nav */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+    border-bottom:2px solid rgba(0,0,0,0.6);
+    z-index:1000;
+    backdrop-filter: blur(6px) saturate(120%);
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--accent);
+    font-family: "Orbitron", sans-serif;
+    letter-spacing:0.6px;
+    font-weight:700;
+    cursor: pointer;
+  }
+  nav{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  nav a{
+    color: #cfe9ff;
+    text-decoration:none;
+    margin-left:12px;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:600;
+    font-size:14px;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  nav a:hover{
+    background: linear-gradient(90deg,var(--accent),var(--accent2));
+    color:#05040a;
+    transform:translateY(-2px);
+  }
+  /* Layout */
+  .container{max-width:1100px;margin:0 auto;padding:4px 22px} /* minimal top padding */
+  section{padding:10px 0; position:relative} /* reduced padding */
+  /* HERO */
+  .hero{
+    display:grid;
+    grid-template-columns: 360px 1fr;
+    gap:40px;
+    align-items:center;
+    min-height:calc(100vh - 66px); /* adjust for header */
+  }
+  .photo-wrap{
+    width:360px;
+    height:360px;
+    border-radius:18px;
+    padding:10px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border:2px solid var(--border);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 40px rgba(107,99,255,0.06);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .photo-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:12px;
+    display:block;
+    border:4px solid rgba(0,0,0,0.5);
+    box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  }
+  .glow-ring{
+    position:absolute;
+    inset: -40% -30% auto -30%;
+    height:120%;
+    pointer-events:none;
+    background: radial-gradient(closest-side, rgba(110,231,255,0.10), transparent 40%);
+    filter:blur(30px);
+    transform: rotate(15deg);
+  }
+  .hero .intro{
+    padding-right:10px;
+  }
+  .name{
+    font-family:"Orbitron",sans-serif;
+    font-size:36px;
+    color:var(--accent);
+    line-height:1;
+  }
+  .title{
+    font-weight:600;
+    font-size:18px;
+    color:#cfe9ff;
+    margin-top:6px;
+    margin-bottom:16px;
+  }
+  .typed{
+    font-family: "Inter", sans-serif;
+    font-size:18px;
+    color: #bfefff;
+    margin-bottom:18px;
+    min-height:28px;
+  }
+  .intro p{
+    color:var(--muted);
+    max-width:56ch;
+    line-height:1.6;
+    margin-bottom:18px;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    padding:10px 16px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.06);
+    background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    color:#eaf8ff;
+    text-decoration:none;
+    font-weight:600;
+  }
+  .btn.primary{
+    background: linear-gradient(90deg,var(--accent),var(--accent2));
+    color:#05040a;
+    box-shadow: 0 6px 18px rgba(110,231,255,0.12);
+  }
+  /* About */
+  .about-grid{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+  .about-card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    padding:20px;
+    border-radius:12px;
+    flex:1;
+    min-width:280px;
+  }
+  .about-card h3{color:var(--accent); font-family:"Orbitron",sans-serif;margin-bottom:8px}
+  .about-card p{color:var(--muted);line-height:1.6}
+  /* Skills */
+  .skills{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .skill{
+    padding:10px 12px;
+    border-radius:10px;
+    background:linear-gradient(180deg,#08101a10,#0b0f1410);
+    border:1px solid rgba(255,255,255,0.03);
+    color:#dcefff;
+    font-weight:600;
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  /* Projects */
+  .projects-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap:18px;
+    margin-top:18px;
+  }
+  .proj-card{
+    display:flex;flex-direction:column;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:2px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .proj-card:hover{ transform: translateY(-10px); box-shadow:0 30px 60px rgba(0,0,0,0.6); }
+  .proj-thumb{ width:100%; height:150px; object-fit:cover; display:block; border-bottom:2px solid rgba(0,0,0,0.6); }
+  .proj-body{ padding:14px; display:flex; flex-direction:column; gap:8px; }
+  .proj-title{ font-weight:700; color:#eaf8ff; font-family:"Orbitron",sans-serif; }
+  .proj-desc{ color:var(--muted); font-size:14px; line-height:1.5; }
+  .proj-links{ margin-top:auto; display:flex; gap:8px; align-items:center; }
+  .link-icon{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.02); color:#cfe9ff; text-decoration:none; font-weight:700;
+  }
+  /* Resume & contact */
+  .resume-btn{ display:inline-block;padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#05040a; font-weight:700; text-decoration:none; border:0; }
+  .contact p{ color:var(--muted) }
+  /* My Learning */
+  .subjects-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+    gap:18px;
+    margin-top:18px;
+  }
+  .subject-btn{
+    padding:14px;
+    border-radius:10px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    color:#eaf8ff;
+    text-decoration:none;
+    font-weight:600;
+    text-align:center;
+    display:block;
+  }
+  .subject-btn:hover{
+    background: linear-gradient(90deg,var(--accent),var(--accent2));
+    color:#05040a;
+  }
+  #learning-content{
+    margin-top:20px;
+    background:var(--card);
+    padding:20px;
+    border-radius:12px;
+    display:none;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  #txt-display{
+    white-space:pre-wrap;
+    overflow:auto;
+    max-height:500px;
+    color:#dcefff;
+    font-family:monospace;
+    font-size:14px;
+    line-height:1.5;
+  }
+  /* Footer */
+  footer{ text-align:center;padding:28px 0;color: #99a9bb; opacity:0.9; border-top:1px solid rgba(255,255,255,0.02); margin-top:40px }
+  /* Hidden / reveal */
+  .hidden { opacity:0; transform: translateY(30px); transition: all .7s cubic-bezier(.2,.9,.2,1); }
+  .show { opacity:1; transform: translateY(0); }
+  /* Responsive Improvements */
+  @media (max-width:960px){
+    .hero{ grid-template-columns: 1fr; text-align:center; gap:20px; min-height:auto; }
+    .photo-wrap{ width:260px;height:260px;margin:0 auto }
+    .intro{ order:2; padding-right:0; }
+    .name{ font-size:28px; }
+    .title{ font-size:16px; }
+    header{ padding:0 16px; height:56px; }
+    nav a{ margin-left:8px; padding:6px 10px; font-size:13px; }
+    body{ padding-top:58px; }
+    .container{ padding:4px 16px; }
+    .projects-grid{ grid-template-columns:1fr; }
+    .subjects-grid{ grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); }
+  }
+  @media (max-width:600px){
+    nav{ flex-direction:column; align-items:flex-end; }
+    nav a{ margin-left:0; margin-bottom:4px; }
+    .hero-actions{ justify-content:center; }
+    .skills{ justify-content:center; }
+    .about-grid{ flex-direction:column; }
+    .about-card{ min-width:auto; }
+    .photo-wrap{ width:200px; height:200px; }
+    .name{ font-size:24px; }
+    .title{ font-size:14px; }
+    section{ padding:8px 0; }
+    footer{ padding:20px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="stars1"></div>
+<div class="stars2"></div>
+<header>
+  <div class="logo" id="logo">Tripti<span style="color:var(--accent2)">.</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
+    <a href="#mylearning">My Learning</a>
+  </nav>
+</header>
+<main class="container">
+  <!-- HERO -->
+  <section id="home" class="hidden">
+    <div class="hero">
+      <div class="photo-wrap">
+        <div class="glow-ring"></div>
+        <!-- Primary src local name, fallback to container path if needed -->
+        <img id="profilePhoto" src="your-photo.jpg" alt="Tripti Pandey"
+             onerror="this.onerror=null; this.src='/mnt/data/your-photo.jpg';">
+      </div>
+      <div class="intro">
+        <div class="name">Tripti Pandey</div>
+        <div class="title">I code therefore I am — <span style="color:var(--accent2)">DevOps Engineer</span> | Cloud Learner | Creative Thinker</div>
+        <div class="typed" id="typed"></div>
+        <p>I’m passionate about building efficient systems, exploring AWS and cloud platforms, and continuously learning to improve my skills. My approach blends creativity, technical precision, and a drive to make ideas come alive.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#projects">See Projects</a>
+          <a class="btn" href="https://github.com/TriptiP-Code" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/tripti-pandey-81110822a/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ABOUT -->
+  <section id="about" class="hidden">
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>About</h3>
+        <p>I’m passionate about building efficient systems, exploring AWS and cloud platforms, and continuously learning to improve my skills. My approach blends creativity, technical precision, and a drive to make ideas come alive.</p>
+      </div>
+      <div class="about-card">
+        <h3>Quick Info</h3>
+        <p style="color:var(--muted)">Location: India<br>Role: DevOps Engineer<br>Availability: Open to opportunities</p>
+        <div style="margin-top:12px">
+          <a class="resume-btn" href="Tripti_Resume.pdf" download>📄 Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- SKILLS -->
+  <section id="skills" class="hidden">
+    <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Skills</h2>
+    <div class="skills">
+      <div class="skill">💻 HTML & CSS</div>
+      <div class="skill">🟨 JavaScript</div>
+      <div class="skill">🐳 Docker</div>
+      <div class="skill">☁️ AWS</div>
+      <div class="skill">🚀 Jenkins</div>
+      <div class="skill">📦 Kubernetes</div>
+      <div class="skill">🪵 Splunk</div>
+      <div class="skill">⚙️ Linux</div>
+      <div class="skill">🧠 Problem Solving</div>
+      <div class="skill">📝 Communication</div>
+    </div>
+  </section>
+  <!-- PROJECTS -->
+  <section id="projects" class="hidden">
+    <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Selected Projects</h2>
+    <p style="color:var(--muted); margin-bottom:10px">Click a project card to open the repository on GitHub.</p>
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <a class="proj-card" href="https://github.com/TriptiP-Code/ci-cd-pipeline" target="_blank" rel="noopener">
+        <img class="proj-thumb" src="https://placehold.co/800x400?text=CI%2FCD+Pipeline" alt="CI/CD pipeline thumbnail">
+        <div class="proj-body">
+          <div class="proj-title">CI/CD Pipeline</div>
+          <div class="proj-desc">Automated deployment using Jenkins, Docker and scripted infrastructure for repeatable releases.</div>
+          <div class="proj-links">
+            <span class="link-icon">View on GitHub ↗</span>
+          </div>
+        </div>
+      </a>
+      <!-- Project 2 -->
+      <a class="proj-card" href="https://github.com/TriptiP-Code/kubernetes-setup" target="_blank" rel="noopener">
+        <img class="proj-thumb" src="https://placehold.co/800x400?text=Kubernetes+Setup" alt="Kubernetes thumbnail">
+        <div class="proj-body">
+          <div class="proj-title">Kubernetes Setup</div>
+          <div class="proj-desc">Helm charts and EKS configuration for highly available microservices deployments.</div>
+          <div class="proj-links">
+            <span class="link-icon">View on GitHub ↗</span>
+          </div>
+        </div>
+      </a>
+      <!-- Project 3 -->
+      <a class="proj-card" href="https://github.com/TriptiP-Code/portfolio" target="_blank" rel="noopener">
+        <img class="proj-thumb" src="https://placehold.co/800x400?text=Portfolio+Website" alt="Portfolio thumbnail">
+        <div class="proj-body">
+          <div class="proj-title">Personal Portfolio</div>
+          <div class="proj-desc">This portfolio — a sleek single-page, responsive site with dark interstellar styling.</div>
+          <div class="proj-links">
+            <span class="link-icon">View on GitHub ↗</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+<!-- RESUME -->
+<section id="resume" class="hidden">
+  <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Resume</h2>
+  <p style="color:var(--muted); margin-bottom:20px;">
+    Download a PDF copy of my resume for a full overview of experience and skills.
+  </p>
+  <a class="resume-btn" href="Tripti_Resume.pdf" download style="margin-top:15px; display:inline-block;">
+    📄 Download Resume
+  </a>
+</section>
+<!-- CONTACT -->
+<section id="contact" class="hidden">
+  <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">Contact</h2>
+  <div class="contact">
+    <p style="color:var(--muted); margin-bottom:18px;">
+      Let’s connect — you can reach me at
+      <b style="color:#eaf8ff">tripti@example.com</b>
+      or on LinkedIn:
+    </p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <a class="btn" href="https://www.linkedin.com/in/tripti-pandey-81110822a/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/TriptiP-Code" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+<!-- MY LEARNING -->
+<section id="mylearning" class="hidden">
+  <h2 style="color:var(--accent); font-family: 'Orbitron', sans-serif; margin-bottom:12px">My Learning</h2>
+  <p style="color:var(--muted); margin-bottom:10px">Select a subject to view the learning content from the uploaded .txt file.</p>
+  <div class="subjects-grid">
+    <a class="subject-btn" href="#" data-txt="html-css.txt">HTML & CSS</a>
+    <a class="subject-btn" href="#" data-txt="javascript.txt">JavaScript</a>
+    <a class="subject-btn" href="#" data-txt="docker.txt">Docker</a>
+    <a class="subject-btn" href="#" data-txt="aws.txt">AWS</a>
+    <a class="subject-btn" href="#" data-txt="jenkins.txt">Jenkins</a>
+    <a class="subject-btn" href="#" data-txt="kubernetes.txt">Kubernetes</a>
+    <a class="subject-btn" href="#" data-txt="splunk.txt">Splunk</a>
+    <a class="subject-btn" href="#" data-txt="linux.txt">Linux</a>
+    <!-- Add more subjects as needed, matching your .txt files -->
+  </div>
+  <div id="learning-content">
+    <pre id="txt-display"></pre>
+  </div>
+</section>
+  <footer>
+    © 2025 Tripti Pandey — Built with ❤️
+  </footer>
+</main>
+<!-- Scripts: typing + reveal on scroll + my learning loader + section toggle -->
+<script>
+  // Typing effect (simple)
+  const phrases = [
+    "DevOps Engineer",
+    "Cloud Learner",
+    "Creative Thinker",
+    "I code therefore I am"
+  ];
+  const typedElem = document.getElementById('typed');
+  let idxP = 0, idxC = 0, forward = true;
+  function typeLoop(){
+    const current = phrases[idxP];
+    if(forward){
+      idxC++;
+      typedElem.textContent = current.slice(0, idxC);
+      if(idxC === current.length){ forward = false; setTimeout(typeLoop, 1000); return; }
+    } else {
+      idxC--;
+      typedElem.textContent = current.slice(0, idxC);
+      if(idxC === 0){ forward = true; idxP = (idxP+1) % phrases.length; setTimeout(typeLoop, 300); return; }
+    }
+    setTimeout(typeLoop, forward ? 80 : 40);
+  }
+  typeLoop();
+  // Simple reveal on scroll (IntersectionObserver)
+  const hidden = document.querySelectorAll('.hidden');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e=>{
+      if(e.isIntersecting && e.target.style.display !== 'none') e.target.classList.add('show');
+    });
+  }, { threshold: 0.15 });
+  hidden.forEach(s => io.observe(s));
+  // Smooth nav highlight (optional: simple) - adjusted for single/full mode
+  const navLinks = document.querySelectorAll('header nav a');
+  let isFullMode = true;
+  function onScrollHighlight(){
+    if (!isFullMode) return;
+    const sections = Array.from(document.querySelectorAll('main section'));
+    const pos = window.scrollY + window.innerHeight/3;
+    let currentId = '';
+    sections.forEach(sec=>{
+      if(sec.offsetTop <= pos) currentId = sec.id;
+    });
+    navLinks.forEach(a=>{
+      a.style.opacity = (a.getAttribute('href') === '#' + currentId) ? '1' : '0.7';
+    });
+  }
+  window.addEventListener('scroll', onScrollHighlight);
+  onScrollHighlight();
+  // Section toggle: show only one or all
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = a.href.split('#')[1];
+      showOnlySection(targetId);
+    });
+  });
+  const logo = document.getElementById('logo');
+  logo.addEventListener('click', () => {
+    showAllSections();
+  });
+  function showOnlySection(id) {
+    document.querySelectorAll('main section').forEach(sec => {
+      sec.style.display = (sec.id === id) ? 'block' : 'none';
+      if (sec.id === id) {
+        sec.classList.add('show'); // ensure revealed
+      }
+    });
+    isFullMode = false;
+    // Highlight the active nav
+    navLinks.forEach(a => {
+      a.style.opacity = (a.getAttribute('href') === '#' + id) ? '1' : '0.7';
+    });
+    // Scroll to top
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  function showAllSections() {
+    document.querySelectorAll('main section').forEach(sec => {
+      sec.style.display = 'block';
+    });
+    isFullMode = true;
+    onScrollHighlight();
+    // Scroll to top
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  // My Learning: Load .txt on subject click
+  const subjectBtns = document.querySelectorAll('.subject-btn');
+  const contentDiv = document.getElementById('learning-content');
+  const txtDisplay = document.getElementById('txt-display');
+  subjectBtns.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const txtFile = btn.dataset.txt;
+      fetch(txtFile)
+        .then(res => {
+          if (!res.ok) throw new Error('File not found');
+          return res.text();
+        })
+        .then(text => {
+          txtDisplay.textContent = text;
+          contentDiv.style.display = 'block';
+          contentDiv.scrollIntoView({behavior: 'smooth'});
+        })
+        .catch(err => {
+          console.error('Error loading file:', err);
+          txtDisplay.textContent = 'Error loading content. Please ensure the .txt file is uploaded and accessible.';
+          contentDiv.style.display = 'block';
+        });
+    });
+  });
+</script>
+</body>
+</html>

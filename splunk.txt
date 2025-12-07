@@ -1,0 +1,284 @@
+📘 Splunk Notes for DevOps Engineers
+
+Obsidian-friendly Markdown Format
+
+# Splunk
+
+Splunk is a powerful platform used to collect, index, search, visualize, and monitor machine data/logs in real time.
+
+## 1. What is Splunk?
+
+A log and event analytics tool.
+
+Helps convert machine data into actionable insights.
+
+Commonly used in DevOps for:
+
+Application logs
+
+Server logs
+
+Kubernetes logs
+
+Security events
+
+Real-time monitoring & alerting
+
+## 2. Splunk Key Components
+### 2.1 Forwarder
+
+Used to send logs to the Splunk Indexer.
+Types:
+
+Universal Forwarder (UF) → light, sends raw data
+
+Heavy Forwarder (HF) → parses & filters data before sending
+
+### 2.2 Indexer
+
+Stores and indexes the logs
+
+Performs search queries
+
+### 2.3 Search Head
+
+UI where users run search queries, dashboards, reports
+
+### 2.4 Deployment Server
+
+Used to centrally manage multiple forwarders.
+
+## 3. Splunk Workflow
+Sources (logs)
+     ↓
+Forwarders
+     ↓
+Indexers → Data indexed
+     ↓
+Search Head → Queries, Dashboards, Alerts
+
+## 4. Splunk Architecture Types
+### 4.1 Standalone Splunk
+
+All components in one instance
+
+Good for learning/small-scale setups
+
+### 4.2 Distributed Splunk Architecture
+
+Forwarders → Indexers → Search Heads
+
+Used in production environments
+
+### 4.3 Clustered Architecture
+
+Indexer Cluster (replication, HA)
+
+Search Head Cluster (high availability)
+
+## 5. Splunk Data Input Methods
+### 5.1 Log Files
+
+/var/log/syslog
+
+Application logs
+Configure in:
+
+Settings → Data Inputs → Files & Directories
+
+### 5.2 Network Inputs
+
+TCP
+
+UDP
+
+Syslog
+
+### 5.3 Cloud Services
+
+AWS CloudWatch
+
+S3
+
+GCP Stackdriver
+
+Azure Monitor
+
+## 6. Splunk Search Processing Language (SPL)
+
+SPL is the core of Splunk.
+
+### 6.1 Basic Search
+ERROR
+status=500
+host="webserver1"
+
+### 6.2 Filtering
+source="/var/log/nginx/access.log" status=404
+
+### 6.3 Using Pipes
+index=prod_logs status=500 | stats count by host
+
+### 6.4 Common SPL Commands
+Command	Purpose
+stats	Aggregations (count, avg, sum)
+top	Top values
+table	Show selected columns
+sort	Sorts results
+where	Conditional filtering
+eval	Create new fields
+rex	Extract fields using regex
+## 7. Dashboards & Visualizations
+### 7.1 Dashboard Types
+
+Area charts
+
+Line charts
+
+Tables
+
+Single-value indicators (e.g., CPU = 80%)
+
+Pie charts
+
+Bar charts
+
+### 7.2 Creating a Dashboard
+Search → Save as → Dashboard Panel
+
+### 7.3 Important Dashboard Panels
+
+Error rate
+
+API latency
+
+CPU / memory graphs
+
+Traffic pattern
+
+Kubernetes pod logs
+
+## 8. Splunk Alerts
+### 8.1 Creating an Alert
+
+Run a search
+
+Save as → Alert
+
+Choose:
+
+Trigger condition
+
+Threshold
+
+Email/Webhook/Slack actions
+
+### 8.2 Common Alerts
+
+High error rate
+
+CPU > 90%
+
+Unauthorized login attempts
+
+Application not sending logs
+
+## 9. Splunk in DevOps
+### 9.1 CI/CD Integrations
+
+Splunk integrates with:
+
+Jenkins
+
+GitLab CI
+
+GitHub Actions
+
+Kubernetes
+
+Docker
+
+### 9.2 Monitoring Containers
+
+Use:
+
+Splunk Connect for Kubernetes (SCK)
+
+Splunk Docker Logging Driver
+
+### 9.3 Observability
+
+Splunk Observability Cloud (SignalFx) for:
+
+Real-time metrics
+
+Traces
+
+APM
+
+## 10. Splunk Best Practices
+### 10.1 Data Management
+
+Use proper indexes
+
+Rotate & archive old logs
+
+Filter unnecessary logs
+
+### 10.2 Performance
+
+Use indexers in cluster for high load
+
+Use summary indexing for heavy analytics
+
+### 10.3 Security
+
+Restrict search access
+
+Mask sensitive data using transforms
+
+Use SSL/TLS for all forwarders
+
+## 11. Common Real-World Scenarios for DevOps
+### 11.1 Debugging Application Issues
+
+SPL:
+
+index=app_logs ERROR | stats count by service
+
+### 11.2 Monitoring Latency
+index=nginx | stats avg(response_time) by uri
+
+### 11.3 Kubernetes Pod CrashLoopBackOff Logs
+index=k8s pod="*" "CrashLoopBackOff"
+
+### 11.4 Security Monitoring
+index=auth_logs action=failure | stats count by user
+
+## 12. Splunk Certification Paths
+
+Splunk User
+
+Splunk Power User
+
+Splunk Admin
+
+Splunk Architect
+
+Splunk Enterprise Security (ES)
+
+Splunk Observability
+
+## 13. Summary
+
+Splunk is essential for DevOps engineers because it provides:
+
+Centralized logging
+
+Powerful analysis with SPL
+
+Dashboards & alerting
+
+Integrations with CI/CD and Kubernetes
+
+Real-time monitoring & security visibility

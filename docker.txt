@@ -1,0 +1,327 @@
+What is Docker?
+
+Docker is a containerization platform that packages applications with their dependencies into portable, reproducible units called containers.
+
+A DevOps engineer uses Docker for:
+
+Building container images
+
+Running microservices
+
+Managing containerized applications
+
+Deploying applications to Kubernetes/ECS
+
+CI/CD pipelines
+
+Creating reproducible environments
+
+🏗️ Docker Architecture
+Components:
+
+Docker Client → runs docker commands
+
+Docker Engine → daemon (dockerd)
+
+Docker Images → templates for containers
+
+Docker Containers → running instances of images
+
+Docker Registry → stores images (DockerHub, ECR, GCR)
+
+🐳 Docker Image
+
+Images are read-only templates used to create containers.
+
+Build images using:
+
+docker build -t myapp .
+
+
+List images:
+
+docker images
+
+
+Remove image:
+
+docker rmi <image-id>
+
+📦 Docker Container
+
+Run a container:
+
+docker run -d -p 8080:80 nginx
+
+
+Common commands:
+
+docker ps
+docker ps -a
+docker stop <id>
+docker start <id>
+docker rm <id>
+docker logs <id>
+docker exec -it <id> bash
+
+📄 Dockerfile — The Heart of Docker
+
+A Dockerfile is a script of instructions to build an image.
+
+Example:
+
+FROM node:18
+WORKDIR /app
+COPY package*.json .
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+
+🧱 Dockerfile Instructions (Must Know)
+Instruction	Purpose
+FROM	Base image
+WORKDIR	Sets working directory
+COPY	Copy files to image
+ADD	Like COPY but supports URLs & extract archives
+RUN	Executes commands during build
+CMD	Default command at runtime
+ENTRYPOINT	Locks command, can accept args
+EXPOSE	Documents port
+ENV	Environment variables
+VOLUME	Mount volume
+USER	Run as specific user
+🔁 CMD vs ENTRYPOINT
+Feature	CMD	ENTRYPOINT
+Overrides	Yes	No
+Use Case	Defaults	Main command
+
+Example:
+
+ENTRYPOINT ["python3"]
+CMD ["app.py"]
+
+🗂️ Docker Images Layers
+
+Each Docker instruction creates a layer.
+
+Benefits:
+
+Caching
+
+Faster builds
+
+Smaller push/pull
+
+Best practice:
+
+Put frequently changing instructions at the bottom
+
+Reuse layers when possible
+
+📦 Docker Volumes & Storage
+Volumes persist container data.
+
+Create volume:
+
+docker volume create data
+
+
+Mount volume:
+
+docker run -v data:/var/lib/mysql mysql
+
+
+Types:
+
+Named volumes
+
+Bind mounts
+
+tmpfs
+
+Use case: Databases, logs, configs.
+
+🌐 Docker Networking
+
+List networks:
+
+docker network ls
+
+
+Types:
+
+bridge (default)
+
+host
+
+none
+
+overlay (for Swarm)
+
+Create network:
+
+docker network create mynet
+
+
+Connect container:
+
+docker network connect mynet mycontainer
+
+⚙️ Docker Compose
+
+Used for multi-container applications.
+
+Example docker-compose.yaml:
+
+version: '3'
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+
+
+Commands:
+
+docker-compose up -d
+docker-compose down
+docker-compose logs
+
+🐳 Docker Hub / ECR / GCR (Registries)
+
+Login:
+
+docker login
+
+
+Tag image:
+
+docker tag myapp:latest username/myapp:v1
+
+
+Push:
+
+docker push username/myapp:v1
+
+
+Pull:
+
+docker pull username/myapp:v1
+
+
+AWS ECR:
+
+aws ecr get-login-password | docker login ...
+
+👮 Docker Security Basics
+
+Use minimal base images (Alpine, Distroless)
+
+Do not run containers as root
+
+Scan images for vulnerabilities
+
+Use private registries
+
+Keep Docker engine updated
+
+Limit container resources
+
+Resource limits:
+
+deploy:
+  resources:
+    limits:
+      cpus: "0.5"
+      memory: "256M"
+
+🐳 Docker in CI/CD (Jenkins Example)
+
+Build image:
+
+sh 'docker build -t myapp:latest .'
+
+
+Push:
+
+sh 'docker push myapp:latest'
+
+
+Deploy:
+
+sh 'docker run -d -p 80:80 myapp:latest'
+
+☸️ Docker + Kubernetes
+
+Kubernetes uses container runtimes, and Docker was traditionally common.
+
+Use Docker to:
+
+Build images
+
+Push to registry
+
+Deploy via Kubernetes manifest
+
+Example:
+
+containers:
+  - name: app
+    image: username/myapp:v1
+
+🏆 Docker Best Practices (DevOps Essentials)
+
+Use small base images (Alpine)
+
+Combine commands in single RUN
+
+Avoid storing secrets in images
+
+Use .dockerignore
+
+Use multi-stage builds
+
+Tag images properly (v1, latest)
+
+Keep Dockerfiles clean and commented
+
+⚡ Docker Multi-Stage Build (Important)
+
+Reduces image size.
+
+Example:
+
+# Build Stage
+FROM node:18 AS builder
+WORKDIR /app
+COPY . .
+RUN npm install && npm run build
+
+# Run Stage
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+
+📦 Useful Docker Commands (Cheat Sheet)
+Command	Purpose
+docker build -t img .	Build image
+docker run img	Run container
+docker exec -it id bash	Enter container
+docker logs id	Logs
+docker stop id	Stop
+docker rm id	Remove
+docker ps -a	All containers
+docker images	List images
+docker rmi id	Remove image
+docker-compose up	Start multi-container
+docker network ls	Networks

@@ -1,0 +1,249 @@
+📂 Linux Filesystem Overview
+Key Directories
+
+/ – Root directory
+
+/home – User home directories
+
+/root – Root’s home
+
+/etc – Config files
+
+/var – Logs, caches, variable data
+
+/usr – User apps, binaries, libraries
+
+/opt – Optional software
+
+/bin, /sbin – Essential commands
+
+/mnt, /media – Mount points
+
+💻 Basic Commands
+ls, pwd, cd, mkdir, rmdir
+touch, rm, cp, mv
+cat, less, head, tail
+
+👤 User & Group Management
+Users
+sudo useradd username
+sudo passwd username
+
+Groups
+sudo groupadd devops
+sudo usermod -aG devops username
+
+Check Info
+id username
+cat /etc/passwd
+cat /etc/group
+
+Delete
+sudo userdel username
+sudo groupdel groupname
+
+🔐 File Permissions & Ownership
+Permission Types
+
+r – read
+
+w – write
+
+x – execute
+
+Change Permissions
+chmod 755 file
+
+
+Symbolic:
+
+chmod u+rwx,g+rx,o+r file
+
+Change Ownership
+sudo chown user:group file
+
+Special Permissions
+
+SUID (4)
+
+SGID (2)
+
+Sticky Bit (1)
+
+Example:
+
+chmod 4755 file
+
+📦 Package Management
+APT (Ubuntu/Debian)
+sudo apt update
+sudo apt install nginx
+sudo apt remove nginx
+
+YUM/DNF (CentOS/RHEL)
+sudo yum install nginx
+sudo dnf remove nginx
+
+🖥️ System Monitoring
+Processes
+ps aux
+top
+htop
+
+Kill
+kill PID
+kill -9 PID
+
+System Load
+uptime
+
+Disk
+df -h
+du -sh *
+
+Memory
+free -h
+
+⚙️ Services (systemd)
+Control Services
+systemctl start nginx
+systemctl stop nginx
+systemctl restart nginx
+systemctl status nginx
+
+Enable Auto-Start
+systemctl enable nginx
+
+🌐 Networking Basics
+IP & Network
+ip addr
+
+Ports
+ss -tulnp
+
+Curl
+curl -I example.com
+
+Ping
+ping google.com
+
+🔑 SSH
+Login
+ssh user@ip
+
+Copy Files
+scp file user@ip:/path/
+
+Generate Keys
+ssh-keygen -t rsa
+
+🕵️ File Searching
+find
+find /path -name "*.log"
+
+grep
+grep "error" file.log
+grep -R "error" /var/log/
+
+📦 Compression & Archiving
+tar
+tar -czvf backup.tar.gz /path
+tar -xzvf backup.tar.gz
+
+zip
+zip -r file.zip folder/
+unzip file.zip
+
+⏰ Cron Jobs
+Edit Cron
+crontab -e
+
+Format
+* * * * * command
+
+Example
+0 * * * * /scripts/backup.sh
+
+📜 Logs
+System logs
+journalctl
+journalctl -u nginx
+
+App logs
+tail -f /var/log/nginx/access.log
+
+💾 Storage & Filesystems
+Check Disks
+lsblk
+fdisk -l
+
+Mount
+mount /dev/sdb1 /mnt
+umount /mnt
+
+🐚 Shell Scripting
+Script Example
+#!/bin/bash
+echo "Hello"
+
+
+Make executable:
+
+chmod +x script.sh
+
+Variables
+name="Tripti"
+echo $name
+
+Loops
+for i in 1 2 3; do
+  echo $i
+done
+
+🐙 Git Basics
+git init
+git clone url
+git status
+git add .
+git commit -m "msg"
+git push origin main
+
+🐳 Docker Basics
+Start Docker
+sudo systemctl start docker
+
+Images
+docker images
+docker pull nginx
+
+Containers
+docker ps
+docker run -d -p 80:80 nginx
+docker stop ID
+
+☸️ Kubernetes Basics
+kubectl get pods
+kubectl get nodes
+kubectl describe pod podname
+kubectl logs podname
+
+📁 Important Config Files
+
+/etc/passwd
+
+/etc/group
+
+/etc/sudoers
+
+/etc/fstab
+
+/etc/hosts
+
+🛡️ Security Essentials
+Firewalls
+sudo ufw enable
+sudo ufw allow 22
+sudo ufw status
+
+File Hashing
+sha256sum file.txt

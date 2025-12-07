@@ -1,0 +1,180 @@
+GIT Learning
+
+Git is a version control tool that helps you track your code changes, restore older versions, and collaborate with teams.
+
+1️⃣ Starting With Git
+
+If you have a project folder containing your code, open the terminal inside that folder and run:
+
+git init
+
+
+This command initializes Git in your folder and starts tracking your files.
+
+After initialization, Git creates a default branch, usually called:
+
+main
+
+2️⃣ Checking Status
+
+To see which files are changed, untracked, or staged:
+
+git status
+
+
+This helps you know what Git is watching inside your folder.
+
+3️⃣ Adding Files to Git
+
+If you want to tell Git:
+“Hey Git, I want to track these changes,"
+you need to add them to the staging area.
+
+Add all files:
+
+git add .
+
+
+Add a specific file:
+
+git add index.html
+
+4️⃣ Saving Changes: Commit
+
+After adding, you save your changes inside Git by committing:
+
+git commit -m "Added homepage layout"
+
+
+Each commit is like a snapshot of your code at that moment.
+
+5️⃣ Connecting to a Remote Repository
+
+If you want to push your code to GitHub, GitLab, etc., add the remote:
+
+git remote add origin https://github.com/user/project.git
+
+
+To verify:
+
+git remote -v
+
+6️⃣ Pushing Code to Remote
+
+To upload your commits:
+
+git push origin main
+
+
+If it’s your first push:
+
+git push -u origin main
+
+7️⃣ Pulling Latest Changes
+
+Before working, always pull the latest code from GitHub:
+
+git pull origin main
+
+
+This avoids conflicts.
+
+8️⃣ Branches
+
+Branches help you work on features separately.
+
+Create a new branch:
+
+git branch feature-1
+
+
+Move to the branch:
+
+git checkout feature-1
+
+
+Create + move in one step:
+
+git checkout -b feature-UI
+
+9️⃣ Merging Branches
+
+After finishing your feature:
+
+Switch to main:
+
+git checkout main
+
+
+Merge your feature into main:
+
+git merge feature-UI
+
+🔟 Handling Conflicts
+
+If Git cannot merge automatically, it shows conflict markers in files.
+Solve manually → save → then:
+
+git add .
+git commit
+
+1️⃣1️⃣ Stashing Work
+
+If mid-work you're asked to shift to another task, but your work isn’t ready to commit:
+
+git stash
+
+
+Later restore:
+
+git stash pop
+
+1️⃣2️⃣ Reverting Changes (Safe Rollback)
+
+If a commit broke production but you want to keep history:
+
+git revert <commit-id>
+
+
+This creates a new commit that undoes the previous one.
+
+1️⃣3️⃣ Resetting Changes (Dangerous)
+
+Soft reset (keeps changes):
+
+git reset --soft HEAD~1
+
+
+Hard reset (deletes changes completely):
+
+git reset --hard HEAD~1
+
+
+Use hard reset carefully.
+
+1️⃣4️⃣ Cherry-Picking (Pick Only One Commit)
+
+If you want only one specific commit from another branch:
+
+git cherry-pick <commit-id>
+
+
+Useful for production hotfixes.
+
+1️⃣5️⃣ Tags (For Releases)
+
+To mark a stable release version:
+
+git tag v1.0.0
+git push origin v1.0.0
+
+1️⃣6️⃣ Viewing Changes
+
+See what has changed in code:
+
+git diff
+
+
+See commit history:
+
+git log --oneline --graph
